@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+body {
+  background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+  color: white;
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
