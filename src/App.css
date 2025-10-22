@@ -43,3 +43,16 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 1.8rem !important;
+  }
+
+  header input {
+    font-size: 0.85rem !important;
+  }
+
+  header button {
+    padding: 0.4rem 0.8rem !important;
+  }
+}

@@ -7,9 +7,9 @@ export default function CreativityIcon({ size = 48 }) {
       whileHover={{ rotate: [0, 10, -10, 0], scale: 1.1 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      {/* SVG beillesztése a public/icons mappából */}
+      {}
       <img
-        src="/icons/creativity.svg"
+        src="https://www.svgrepo.com/show/444451/gui-palette.svg"
         alt="Creativity Icon"
         width={size}
         height={size}

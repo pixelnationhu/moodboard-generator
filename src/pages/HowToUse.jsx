@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-export default function About() {
+export default function HowToUse() {
   return (
     <motion.div
       className="max-w-4xl mx-auto py-20 px-6 text-left"
@@ -23,39 +23,28 @@ export default function About() {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="text-3xl sm:text-4xl mb-2 sm:mb-0"
         >
-          💖
+          💡
         </motion.span>
 
         {}
-        <h1 className="text-4xl sm:text-4xl font-bold bg-gradient-to-r from-pink-500 via-fuchsia-500 to-violet-400 text-transparent bg-clip-text leading-tight">
-          About Moodboard Generator
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-fuchsia-500 to-violet-400 text-transparent bg-clip-text leading-tight">
+          Inspirációk és Moodboard ötletek
         </h1>
       </motion.div>
 
       {}
       <div className="bg-white/30 dark:bg-white/10 backdrop-blur-xl rounded-2xl shadow-lg p-8 sm:p-10 mb-10">
         <h2 className="text-2xl font-semibold mb-4 text-pink-500">
-          Miért készült ez az app?
+          Hogyan használd az appot?
         </h2>
         <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-          A Moodboard Generator azért jött létre, hogy a kreatív alkotók,
-          designerek és vizuális gondolkodók gyorsan találjanak inspirációt
-          színekhez, hangulatokhoz és stílusokhoz.
-        </p>
-        <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-          Az alkalmazás az{" "}
-          <span className="font-semibold text-pink-500 dark:text-pink-400">
-            Unsplash API
-          </span>{" "}
-          képeit használja, és automatikus színpalettákat generál hozzájuk,
-          hogy segítsen az ötletelésben, webdesignban vagy arculattervezésben.
+          A főoldalon különböző témákra kereshetsz képeket, majd az automatikus
+          színpaletták segítségével ötleteket gyűjthetsz grafikai projektekhez,
+          webdesignhoz, arculathoz vagy bármilyen kreatív munkához.
         </p>
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-          Készítette:{" "}
-          <span className="font-semibold text-pink-500 dark:text-pink-400">
-            Elisa
-          </span>{" "}
-          🎨 grafikus, webdesigner és front-end fejlesztő.
+          A cél, hogy minden pillanatban könnyen találj inspirációt, gyorsan,
+          letisztultan és esztétikusan. ✨
         </p>
       </div>
 

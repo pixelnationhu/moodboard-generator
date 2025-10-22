@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ColorPaletteModal from "./ColorPaletteModal";
+import { sendEvent } from "../analytics";
 
 const ACCESS_KEY = "eFUdZ7GWGtvPPL4WE64Fgjt0dnQgYYq20Y_7bLKFLls";
 
@@ -10,7 +11,6 @@ export default function ImageGrid({ query }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // === Képek betöltése az Unsplash API-ról ===
   useEffect(() => {
     const fetchImages = async () => {
       if (!query) return;
@@ -36,7 +36,7 @@ export default function ImageGrid({ query }) {
   return (
     <>
       {loading && (
-        <p className="text-gray-400 text-center mt-10 animate-pulse">
+        <p className="text-black-400 text-center mt-10 animate-pulse">
           Képek betöltése folyamatban...
         </p>
       )}
@@ -44,28 +44,57 @@ export default function ImageGrid({ query }) {
       {error && <p className="text-red-500 text-center mt-10">{error}</p>}
 
       {!loading && !error && (
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6">
+        <div
+          className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            md:grid-cols-3
+            lg:grid-cols-4
+            gap-4 sm:gap-6
+            px-3 sm:px-6 md:px-10
+            max-w-7xl mx-auto
+            transition-all duration-300
+          "
+        >
           {images.length > 0 ? (
             images.map((img, index) => (
               <motion.div
                 key={img.id}
-                className="mb-4 relative overflow-hidden rounded-2xl group cursor-pointer"
+                className="relative overflow-hidden rounded-2xl group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
               >
                 <motion.img
                   src={img.urls.small}
-                  alt={img.alt_description}
-                  className="w-full h-auto rounded-2xl object-cover will-change-transform"
-                  whileHover={{ scale: 1.08 }}
+                  alt={img.alt_description || "Moodboard kép"}
+                  className="w-full h-[250px] sm:h-[280px] md:h-[300px] object-cover rounded-2xl will-change-transform transition-transform duration-300"
+                  whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 200 }}
-                  onClick={() => setSelectedImage(img.urls.small)}
+                  loading="lazy"
                 />
 
-                {/* Hover overlay */}
-                <motion.div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-                  <span className="text-white text-sm font-medium bg-white/20 px-3 py-1 rounded-full hover:bg-white/40 transition">
+                {}
+                <motion.div
+                  className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300"
+                  onClick={() => {
+                    const proxiedUrl = `${
+                      window.location.origin
+                    }/moodboard/proxy.php?url=${encodeURIComponent(
+                      img.urls.raw + "&w=800&h=600&fit=crop"
+                    )}`;
+                    console.log("🎨 Paletta gomb megnyomva:", proxiedUrl);
+                    setSelectedImage(proxiedUrl);
+
+                    sendEvent("palette_click", {
+                      query,
+                      imageUrl: proxiedUrl,
+                      description: img.alt_description || "Nincs leírás",
+                    });
+                  }}
+                >
+                  <span className="text-white text-sm sm:text-base font-medium bg-white/30 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg hover:bg-white/50 transition">
                     🎨 Nézd meg a palettát
                   </span>
                 </motion.div>
@@ -79,9 +108,11 @@ export default function ImageGrid({ query }) {
         </div>
       )}
 
-      {/* === Színpaletta modal === */}
+      
+
       {selectedImage && (
         <ColorPaletteModal
+          key={selectedImage}
           imageUrl={selectedImage}
           onClose={() => setSelectedImage(null)}
         />
